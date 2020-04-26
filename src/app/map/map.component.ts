@@ -28,10 +28,22 @@ export class MapComponent implements AfterViewInit  {
   }
 
   private initTiles(): void {
-    L.tileLayer('https://tiles.stadiamaps.com/tiles/osm_bright/{z}/{x}/{y}{r}.png', {
-      maxZoom: 18,
-      attribution: '&copy; <a href="https://stadiamaps.com/">Stadia Maps</a>, &copy; <a href="https://openmaptiles.org/">OpenMapTiles</a> &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors'
-    }).addTo(this.map);
+    var map = L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token=sk.eyJ1IjoiZGF2aWRyb2xkYW4iLCJhIjoiY2s5aGUweXFiMHRvdDNsanc4aTlldmVpdiJ9.UAGJjfGE_wtXK-meHdIHIg', {
+    	maxZoom: 18,
+    	attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors, ' +
+    		'<a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, ' +
+    		'Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
+    	id: 'mapbox/streets-v11',
+    	tileSize: 512,
+    	zoomOffset: -1
+    })
+
+    /*map.setLayoutProperty('country-label', 'text-field', [
+      'get',
+      'name_es'
+    ]);*/
+
+    map.addTo(this.map);
   }
 /*
   private initSearchBox(): void {
