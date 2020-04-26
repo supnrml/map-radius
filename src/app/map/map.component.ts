@@ -1,5 +1,6 @@
 import { AfterViewInit, Component, OnInit } from '@angular/core';
 import * as L from 'leaflet';
+import { GeoSearchControl, EsriProvider } from 'leaflet-geosearch';
 
 @Component({
   selector: 'app-map',
@@ -17,7 +18,7 @@ export class MapComponent implements AfterViewInit  {
   ngAfterViewInit(): void {
     this.initMap();
     this.initTiles();
-    //this.initSearchBox();
+    this.initSearchBox();
   }
 
   private initMap(): void {
@@ -33,17 +34,13 @@ export class MapComponent implements AfterViewInit  {
       attribution: '&copy; <a href="https://stadiamaps.com/">Stadia Maps</a>, &copy; <a href="https://openmaptiles.org/">OpenMapTiles</a> &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors'
     }).addTo(this.map);
   }
-/*
-  private initSearchBox(): void {
-    let searchControl = new esri.Geocoding.Geosearch().addTo(this.map);
-    let layerGroup = new L.LayerGroup().addTo(this.map);
 
-    searchControl.on('results', function(data) {
-      layerGroup.clearLayers();
-      data.layer.results.array.forEach(result => {
-        layerGroup.addLayer(L.marker(result.latlng));
-      });
+  private initSearchBox(): void {
+    let searchControl = new GeoSearchControl({
+      provider: new EsriProvider(),
+      //style: 'bar',
     });
+    this.map.addControl(searchControl);
   }
-*/
+
 }
