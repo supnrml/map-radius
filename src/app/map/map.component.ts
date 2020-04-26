@@ -12,7 +12,7 @@ export class MapComponent implements AfterViewInit  {
   /** The ID of the DOM element where the Leaflet map is to be anchored. */
   private static readonly MAP_DOM_ID = 'map'
   private map: L.Map
-  private circle = undefined
+  private circleLayer: L.Layer = undefined
 
   constructor() { }
 
@@ -22,17 +22,17 @@ export class MapComponent implements AfterViewInit  {
     this.initSearchBox();
   }
 
-  protected onClick(e): void {
+  private onClick(e): void {
     var radius = 1000
-    if (this.circle != undefined){
-      this.map.removeLayer(this.circle);
+    if (this.circleLayer != undefined){
+      this.map.removeLayer(this.circleLayer);
     }
-    this.circle = L.circle(e.latlng, 1000)
-  	this.circle.addTo(this.map);
+    this.circleLayer = L.circle(e.latlng, radius)
+  	this.circleLayer.addTo(this.map);
   }
 
   private initMap(): void {
-    this.map = L.map('map').setView([40.416, -3.70], 6.5)
+    this.map = L.map(MapComponent.MAP_DOM_ID).setView([40.416, -3.70], 6.5)
     this.map.on('click', this.onClick.bind(this));
   }
 
